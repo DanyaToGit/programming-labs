@@ -1,0 +1,10 @@
+pi = 3.14159
+d = float(input("Введите диаметр (d): "))
+v = float(input("Введите высоту (v): "))
+s = (pi * (d**2)) / 4
+Q = s * v
+print("-" * 20)
+print(f"Результаты расчетов:")
+print(f"Площадь (s): {round(s, 4)}")
+print(f"Объем (Q):   {round(Q, 4)}")
+print("-" * 20)
