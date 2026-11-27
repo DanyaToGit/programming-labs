@@ -1,0 +1,34 @@
+def get_start_ph():
+    while True:  
+        user_input = input("Введите начальное значение pH (от 0 до 14): ")
+        user_input = user_input.replace(",", ".")
+        check = user_input.replace(".", "", 1)
+        if check.isdigit() == False:
+            print("Ошибка: нужно ввести число, например 4.2 или 9.\n")
+            continue
+        ph = float(user_input)  
+        if ph < 0 or ph > 14:
+            print("Ошибка: pH должен быть в диапазоне от 0 до 14.\n")
+            continue
+        return ph
+def neutralize_ph(start_ph):
+    ph = start_ph
+    doses = 0
+    while ph < 6.5 or ph > 7.5:
+        if ph < 6.5:
+            ph += 0.5
+            print(f"Добавлена щёлочь. Текущий pH = {ph:.1f}")
+        else:
+            ph -= 0.5
+            print(f"Добавлена кислота. Текущий pH = {ph:.1f}")
+        doses += 1 
+    return doses
+def main():
+    print("=== Программа нейтрализации раствора ===\n")
+    start_ph = get_start_ph()
+    print(f"\nНачальный pH = {start_ph}\n")
+    doses = neutralize_ph(start_ph)    
+    print(f"\nИтог: pH доведён до нейтрального диапазона [6.5; 7.5].")
+    print(f"Количество добавленных доз: {doses}")
+if __name__ == "__main__":
+    main()
