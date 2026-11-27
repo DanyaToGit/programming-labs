@@ -1,0 +1,29 @@
+import sys
+from variant_mod import search_component, get_low_stock, get_storage_zones
+def main():
+    min_qty = int(sys.argv[1]) if len(sys.argv) > 1 else 50
+    inventory = {
+        'Resistor 10k': (120, 'Zone-A'),
+        'Capacitor 100uF': (30, 'Zone-B'),
+        'Microcontroller': (15, 'Zone-A'),
+        'Relay 12V': (80, 'Zone-C'),
+    }
+    print("=== УЧЕТ АВТОМАТИЗИРОВАННОГО СКЛАДА ===")
+    low_stock = get_low_stock(inventory, min_qty)
+    print(f"Дефицитные детали (<{min_qty} шт): {low_stock}")
+    zones = get_storage_zones(inventory)
+    print(f"Буквенные зоны хранения (set): {zones}")
+if __name__ == "__main__":
+    main()
+Описание функций в файле variant_mod.py
+"""Модуль учёта автоматизированного склада (AGV)."""
+def search_component(inventory_dict, item_name):
+    """Ищет компонент в словаре ячеек складирования.
+    Возвращает кортеж (qty, zone) или None, если компонент не найден."""
+    return inventory_dict.get(item_name)
+def get_low_stock(inventory_dict, min_qty):
+    """Возвращает список кортежей (item, qty) для компонентов с остатком < min_qty."""
+    return [(item, qty) for item, (qty, zone) in inventory_dict.items() if qty < min_qty]
+def get_storage_zones(inventory_dict):
+    """Извлекает множество уникальных буквенных зон хранения."""
+    return {zone for (qty, zone) in inventory_dict.values()}
